@@ -1,0 +1,37 @@
+<div>
+
+<p>This is the partial for view 2. {{testModel}}</p> {{testModel}}
+<div>
+        {{multiCheck}}
+
+
+        <div ng-show="multiCheck[1].value">
+
+        </div>
+fsdfjsd
+
+    <!--<jb-form-input type = 'multicheckbox' label="Choose one" ng-model = "multiCheck" ></jb-form-input>-->
+    <!--<jb-form-input name = "input" ng-model = "userType" required></jb-form-input>-->
+
+{{testModel}}
+</div>
+    <form name="myForm">
+
+      <!--  <jb-form-input type = 'multicheckbox' label="Choose one" ng-model = "multiCheck" jb-required="1"></jb-form-input>
+        <jb-form-input name = "input" ng-model = "userType" jb-required></jb-form-input>
+		<jb-form-input ng-model = "userType" jb-required></jb-form-input>-->
+		<ui-form-input ng-model = "userType" ui-required></ui-form-input>
+		<ui-form-input type = "multicheckbox" label = "choose one" ng-model = "multiCheck" ui-required="1"></ui-form-input>
+        userType: <div><input type = "text" ng-model = "temp"></div>
+        <span class="error" ng-show="myForm.input.$error.required">Required!</span><br>
+        userType = {{userType}}<br>
+        myForm.input.$valid = {{myForm.input.$valid}}<br>
+        myForm.input.$error = {{myForm.input.$error}}<br>
+        myForm.$valid = {{myForm.$valid}}<br>
+        myForm.$error.required = {{!!myForm.$error.required}}<br>
+    </form>
+
+</div>
+
+
+
