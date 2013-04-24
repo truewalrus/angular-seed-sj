@@ -4,7 +4,10 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    //uglify minifies and concatenates all angular.js files into build.js for production
+    /*
+		uglify minifies and concatenates all angular.js files into app/production/build.js for production
+		mangle is set to false in the options because this disrupted the angular source files and caused errors
+	*/
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
@@ -20,7 +23,7 @@ module.exports = function(grunt) {
         dest: 'app/production/build.js'
       }
     },
-    //converts less to css
+    //converts less to css in app/production/css/base.css
 	less: {
 		base: {
 			src: ['app/less/base/*.less', 'app/less/third-party/*.less'],
@@ -45,7 +48,10 @@ module.exports = function(grunt) {
 			jquery: true,
 			node: true,
 			sub: true,
-            //globals are set so that jshint ignores them when there are no ways to workaround them
+			/*
+				sets some global variable names that jshint will not throw errors for
+				without this, it will complain that these global variables are not defined and such
+			*/
 			globals: { "angular": false, "FB": false, "window": false, "document":false, "navigator": false}
 		}
     },
@@ -56,7 +62,10 @@ module.exports = function(grunt) {
 			autoWatch: true
 		}
 	},
-    //concatenates all third party js inclusions into one file for easier script inclusion in index.html
+    /*
+		concatenates all third party js files in app/lib/third-party-js inclusions into one file, app/production/lib/js/third-party.js 
+		this allows for easier script inclusion in index.html
+	*/
 	concat: {
     dist: {
 		src: ['app/lib/third-party-js/*.js'],
@@ -84,7 +93,5 @@ module.exports = function(grunt) {
 
   // Default task(s). Add task here if you want it to run every time grunt is run
   grunt.registerTask('default', ['uglify', 'less', 'jshint', 'concat']);
-  
-  
 
 };

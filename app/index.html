@@ -1,4 +1,4 @@
-<!--<!doctype html>-->
+<!doctype html>
 <html lang="en" ng-app="myApp">
 <head>
   <meta charset="utf-8">
@@ -17,18 +17,20 @@
     <script src="lib/angular-ui-0.4.0/build/angular-ui-ieshiv.js"></script>
     <![endif]-->
 
-
+	<!-- Include 3rd party libraries jquery and twitter bootstrap -->
     <script src="production/lib/js/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="production/lib/css/bootstrap.min.css">
 	<script src="production/lib/js/bootstrap.min.js"></script>
 
-    <!--javascript file that is a concatenated version of all third party min.js-->
+    <!-- Include javascript file that is a concatenated version of all third party min.js files in app/lib/third-party-js -->
 	<script src="production/lib/js/third-party.js"></script>
+	
+	<!-- Include angularJS source files -->
     <script src="production/lib/js/angular.min.js"></script>
     <script src="lib/angular-ui-0.4.0/build/angular-ui.js"></script>
     <link rel="stylesheet" href="lib/angular-ui-0.4.0/build/angular-ui.css">
 
-    <!--javascript file that is a concatenated version of all angular.js files-->
+    <!--javascript file that is a concatenated version of all angular.js files from app/js -->
 	<script src="production/build.js"></script>
 
 </head>
