@@ -62,6 +62,9 @@ app.use(express.static(__dirname + '/app'));
 	5. Routing
 */
 app.get('/api/test1', handlers.test1);
+app.get('/api/user', handlers.allUsers);
+app.get('/api/user/fname/:fname', handlers.findUserByFname);
+app.get('/api/user/age/:age', handlers.findUserByAge);
 app.get('*', handlers.index);
 
 

@@ -2,7 +2,12 @@
   "name": "angular-seed-master",
   "version": "0.1.0",
   "dependencies": {
+<<<<<<< HEAD
     "express": "~3.0.0"
+=======
+	"express": "~3.0.0",
+	"mongodb": ">= 0.9.6-7"
+>>>>>>> 2e41068d1fa4c404f8880262dba5aff21f1f5fa0
   },
   "devDependencies": {
     "grunt": "~0.4.1",
