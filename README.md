@@ -15,10 +15,20 @@ In order to view the web page, go to localhost:1337 in a browser
 This seed is setup to easily incorporate new files without having to often modify app.js or index.html.
 
 ### Front-end
-All frontend code is located in app/
+All frontend code is located in app/  
 
-* app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled.
-If adding a new directive, service, or filter, the angular-module should be done like so for a directive, replace "directives" with "filters" and "services" respectively:
+app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled.  
+ 
+For example, to add a new directive:  
+
+  * Open app/js/directives
+  * Create a new .js file titled as the name of your directive ([directiveName].js)
+  * In your directive, write `angular.module("myApp.directives").directive("[directiveName]" function() { [directive functionality] });`
+  * Add all third party minified dependency js files to app/lib/third-party-js and all third party less files
+ to app/less/third-party
+  * Run `grunt` in command prompt and it's done! Use as normal.  
+
+
 
 		angular.module("myApp.directives").directive("directiveName")
 
