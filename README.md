@@ -63,4 +63,23 @@ The site is hosted using Node.JS
 
 #### Adding Routes for Backend API Calls
 
+* There are 2 main steps for adding a new route for a backend api call:  
+	1. Add a line in the server.js file to route the specific call
+		ex: `app.get('/api/ex1', handlers.test1);`
+	2. Add handler logic in node/handlers.js file to generate the appropriate response  
+
+			/* 
+			   create function to handle request 
+			   express feeds all request handlers a request and response object
+			*/
+			function test1(request, response) {
+				// sent the text 'test1' as the response
+				response.send('test1');
+			}
+			// include test1 as part of the exports so it's accessible in the server.js file
+			exports.test1 = test1;
+		
+		Request handling can obviously become more complex when querying databases and such, but the routing principles remain the same.
+
+
 #### Adding custom modules
