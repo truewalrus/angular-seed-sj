@@ -13,6 +13,11 @@
 	4. Configuration
 		4.1 Set Static File Path
 	5. Routing
+		// 5.1 test1 get call
+		// 5.2 user get call
+		// 5.3 user first name get call
+		// 5.4 user age call
+		// 5.5 catch-all get call
 	6. Listen on Specified Port
 	
 	
@@ -59,12 +64,37 @@ app.use(express.static(__dirname + '/app'));
 
 
 /*
-	5. Routing
+	5. Routing for API calls
+*/
+
+// 5.1 test1 get call
+/*
+	Returns the string 'sending test1'
 */
 app.get('/api/test1', handlers.test1);
+
+// 5.2 user get call
+/*
+	returns all users in a list of objects
+*/
 app.get('/api/user', handlers.allUsers);
+
+// 5.3 user first name get call 
+/*
+	returns users matching the first name field provided in a list of objects
+*/
 app.get('/api/user/fname/:fname', handlers.findUserByFname);
+
+// 5.4 user age call 
+/*
+	returns users matching the age field provided in a list of objects
+*/
 app.get('/api/user/age/:age', handlers.findUserByAge);
+
+// 5.5 catch-all get call 
+/*
+	any get calls that do not match an above api call will direct to the angularjs app to handle front-end routing
+*/
 app.get('*', handlers.index);
 
 

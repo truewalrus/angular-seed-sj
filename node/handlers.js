@@ -3,21 +3,37 @@
 	
 	This file defines the functions that are called in the routing section of the index.js node file.
 	This file is included by index.js.
+	This file initialize the db connection, and if necessary collections do not exist, it populates them with initial values.
 	Any logic to interact with databases should be defined in the functions in this file (or modules called by this file)
 	in order to handle calls that require database access.
 	
 	Contents:
-	1. Get Request Handlers
-		1.1 Main Index / Default Handler
-		1.2 'api/bye' Handler
-	2. Post Request Handlers
+	// 1. MongoDB Setup and Initialization
+		// 1.1 Initiate MongoDB variables and requirements
+		// 1.2 Open connection to db
+		// 1.3 populateDB function
+	// 2. Get Requests
+		// 2.1 Main Index / Default Handler
+		// 2.2 'api/bye' Handler
+	// 3. Post Request Handlers
 */
 
 
+
+// 1. MongoDB Setup and Initialization
+
+// 1.1 Initiate MongoDB variables and requirements
+/*
+	Include mongodb dependency for node, start new mongodb server, create connector object to the db
+*/
 var mongodb = require('mongodb'),
 	mongoserver = new mongodb.Server('localhost', mongodb.Connection.DEFAULT_PORT, {'auto-reconnect': true}),
 	db_connector = new mongodb.Db('test1', mongoserver, {'strict': true});
 
+// 1.2 Open connection to db
+/*
+	Open connection to the db, test if users collection exists, if it doesn't, run populateDB() to create and populate the collection
+*/
 db_connector.open(function(err, db) {
 	if (!err) {
 		console.log("Connected to test 1!");
@@ -30,6 +46,12 @@ db_connector.open(function(err, db) {
 	}
 });
 
+// 1.3 populateDB function
+/*
+	Create a list of users
+	Create a collection in the db
+	Insert the list into the collection
+*/
 var populateDB = function() {
 	var users = [
 		{
@@ -53,25 +75,25 @@ var populateDB = function() {
 	});
 };
 
-/*
-	1. Get Requests
-*/
 
-// 1.1 Main Index / Default Handler
+
+// 2. Get Requests
+
+// 2.1 Main Index / Default Handler
 function index(request, response) {
 	console.log('sending index.html');
 	response.sendfile('app/index.html');
 }
 exports.index = index;
 
-// 1.2 'api/test1' Handler
+// 2.2 'api/test1' Handler
 function test1(request, response) {
 	console.log('sending test1');
 	response.send('test1');
 }
 exports.test1 = test1;
 
-// 1.3 'api/user' Handler
+// 2.3 'api/user' Handler
 function allUsers(request, response) {
 	db_connector.collection('users', function(err, collection) {
 		collection.find().toArray(function(err, items) {
@@ -81,7 +103,7 @@ function allUsers(request, response) {
 }
 exports.allUsers = allUsers;
 
-// 1.4 'api/user/fname/:fname' Handler
+// 2.4 'api/user/fname/:fname' Handler
 function findUserByFname(request, response) {
 	
 	var fname = request.params.fname;
@@ -94,7 +116,7 @@ function findUserByFname(request, response) {
 }
 exports.findUserByFname = findUserByFname;
 
-// 1.5 'api/user/age/:age' Handler
+// 2.5 'api/user/age/:age' Handler
 function findUserByAge(request, response) {
 	
 	var age = parseInt(request.params.age);
@@ -108,6 +130,5 @@ function findUserByAge(request, response) {
 exports.findUserByAge = findUserByAge;
 
 
-/*
-	2. Post Requests
-*/
+
+// 3. Post Requests
