@@ -24,6 +24,7 @@ Sample Form Usage:
         {text: "Box 3", value: true}
     ];
 */
+'use strict';
 angular.module('myApp.directives', [])
 .directive('jbFormInput', function() {
 
@@ -98,17 +99,8 @@ angular.module('myApp.directives', [])
                     scope.checked = 0;
 
                     ctrl.$setValidity('required',false);
-
-                    for (var i = 0; i < scope.ngModel.length; i++) {
-                        if (scope.ngModel[i].value) {
-                            scope.checked++;
-                        }
-
-                        if (scope.checked >= scope.jbRequired) {
-                            ctrl.$setValidity('required',true);
-                        }
-
-                        scope.$watch('ngModel[' + i + '].value', function(value, oldValue) {
+					
+					var checkVal = function(value, oldValue) {
                             if (oldValue != value) {
                                 if (value) {
                                     scope.checked++;
@@ -124,7 +116,18 @@ angular.module('myApp.directives', [])
                                     ctrl.$setValidity('required',false);
                                 }
                             }
-                        });
+                        };
+
+                    for (var i = 0; i < scope.ngModel.length; i++) {
+                        if (scope.ngModel[i].value) {
+                            scope.checked++;
+                        }
+
+                        if (scope.checked >= scope.jbRequired) {
+                            ctrl.$setValidity('required',true);
+                        }
+
+                        scope.$watch('ngModel[' + i + '].value', checkVal);
                     }
                 }
             };

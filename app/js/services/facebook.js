@@ -1,3 +1,4 @@
+'use strict';
 angular.module('myApp.services')
 .service('Facebook', function($q, $timeout){
 	this.fbResponse	= '';
@@ -5,10 +6,10 @@ angular.module('myApp.services')
 	this.login = function(){
 			var resp = $q.defer();
 			FB.login(function(response) {
-				$timeout(function(){resp.resolve(response.authResponse)}, 1);
+				$timeout(function(){
+				resp.resolve(response.authResponse)}, 1);
 			});
 			this.fbResponse = resp.promise;
-				console.log(this.fbResponse);
 	};
 	
 	this.logout = function(){
@@ -25,7 +26,6 @@ angular.module('myApp.services')
 });
 
 window.fbAsyncInit = function() {
-console.log("confirm2");
 	FB.init({
 		appId: '281909378612016'
 	});
@@ -33,7 +33,6 @@ console.log("confirm2");
 
 // Load the Facebook SDK Asynchronously
 (function(d){
-console.log("confirm");
     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
     if (d.getElementById(id)) {return;}
     js = d.createElement('script'); js.id = id; js.async = true;

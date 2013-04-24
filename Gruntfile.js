@@ -29,11 +29,17 @@ module.exports = function(grunt) {
 		}
     },
 	jshint: {
-		all: ['Gruntfile.js', 'app/js/filters.js'],
+		all: ['Gruntfile.js', 
+				'app/js/*.js', 
+				//'app/js/directives/*.js',
+				'app/js/services/*.js',
+				'app/js/filters/*.js', 
+				//'app/js/controllers/*.js' ],
 		options:{
 			globalstrict: true,
 			jquery: true,
 			node: true,
+			sub: true,
 			globals: { "angular": false }
 		}
     },
