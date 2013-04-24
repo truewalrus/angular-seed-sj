@@ -17,16 +17,11 @@ This seed is setup to easily incorporate new files without having to often modif
 ### Front-end
 All frontend code is located in app/
 
--- app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled
+* app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled
+If adding a new directive, service, or filter, the angular-module should be done like so for a directive, replace "directives" with "filters" and "services" respectively:
 
-	-- If adding a new directive, service, or filter, the angular-module should be done like so for a directive, replace "directives" with "filters" and "services" respectively:
-
-		```html
 		<angular.module('myApp.directives").directive('directiveName')
-		```
-		
-		and use it as normal.
 
-To add 3rd party javascirpt, drag min files into lib/third-party-js and less files into less/third-party.
+* To add 3rd party javascirpt, drag min files into lib/third-party-js and less files into less/third-party.
 
-Adding a new partial still requires a new $routeProvider route in app.js, less files go in base.less
+* Adding a new partial still requires a new $routeProvider route in app.js, less files go in base.less
