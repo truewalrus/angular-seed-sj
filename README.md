@@ -5,9 +5,9 @@ This is an easily modifiable angular-seed incorporating angular-ui, bootstrap, a
 ## Server Setup
 
 After pulling, navigate to the main folder and open cmd prompt, enter and run:
-* npm install -- this installs all needed dependencies
-* grunt -- compiles all code into its production form, which is currently what the index file is looking at to run
-* node server -- server.js is the file in which the node server is located, node server runs this server
+* `npm install` -- this installs all needed dependencies
+* `grunt` -- compiles all code into its production form, which is currently what the index file is looking at to run
+* `node server` -- server.js is the file in which the node server is located, node server runs this server
 
 In order to view the web page, go to localhost:1337 in a browser
 
@@ -20,7 +20,7 @@ All frontend code is located in app/
 * app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled
 If adding a new directive, service, or filter, the angular-module should be done like so for a directive, replace "directives" with "filters" and "services" respectively:
 
-		<angular.module('myApp.directives").directive('directiveName')
+		angular.module('myApp.directives").directive('directiveName')
 
 * To add 3rd party javascirpt, drag min files into lib/third-party-js and less files into less/third-party.
 
