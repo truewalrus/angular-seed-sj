@@ -20,7 +20,7 @@ All frontend code is located in app/
 * app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled.
 If adding a new directive, service, or filter, the angular-module should be done like so for a directive, replace "directives" with "filters" and "services" respectively:
 
-		angular.module('myApp.directives").directive('directiveName')
+		angular.module("myApp.directives").directive("directiveName")
 
 * To add 3rd party javascirpt, drag min files into lib/third-party-js and less files into less/third-party.
 
