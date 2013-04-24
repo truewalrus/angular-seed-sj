@@ -22,6 +22,6 @@ If adding a new directive, service, or filter, the angular-module should be done
 
 		angular.module("myApp.directives").directive("directiveName")
 
-* To add 3rd party javascirpt, drag min files into lib/third-party-js and less files into less/third-party.
+* To add 3rd party javascript, drag minified (.min.js) files into app/lib/third-party-js and less files into app/less/third-party.
 
 * Adding a new partial still requires a new $routeProvider route in app.js, less files go in base.less
