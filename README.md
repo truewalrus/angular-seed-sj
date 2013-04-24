@@ -40,11 +40,26 @@ For example, to add a new directive:
 The site is hosted using Node.JS
 
 #### Initial Installation and Setup
+*This assumes that the user has Node.JS already installed.  If they don't, see the [Node Docs](http://nodejs.org/) for installation instructions*  
+
+* The first time initializing the app, the user must run `npm install` to install all dependencies
+* The package.json file in the root folder contains necessary dependencies for Node, as well as Grunt (the task-runner for building the app).  It also specifies the version of each dependency to install.  
+	* Node dependencies:
+		* [express](http://expressjs.com/) (node.js web framework)
+		* [mongodb](http://www.mongodb.org/) (MongoDB database)
+	* Grunt dependencies:
+		* [grunt](http://gruntjs.com/) (task-runner for javascript)
+		* [jshint](https://github.com/gruntjs/grunt-contrib-jshint) (checks all js files for errors, and will halt grunt if errors are found)
+		* [uglify](https://github.com/gruntjs/grunt-contrib-uglify) (minifies files)
+		* [less](https://github.com/gruntjs/grunt-contrib-less) (converts all .less files to one .css files)
+		* [karma](https://github.com/karma-runner/grunt-karma) (runs unit and e2e tests)
+		* [concat](https://github.com/gruntjs/grunt-contrib-concat) (concatenates files)
+* Any time a new module or dependency is added, `npm install` must be run again to install that new piece
 
 #### Running the Server
 
 * To start the server, open a command prompt, or Cygwin terminal, navigate to the root directory, and type `node server`
-* The terminal should then say "Listening on port 1337"
+* The terminal should then say `Listening on port 1337`
 
 #### Adding Routes for Backend API Calls
 
