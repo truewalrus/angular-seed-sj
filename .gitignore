@@ -8,3 +8,4 @@ build.xml
 .idea/*
 
 node_modules/
+app/production/build.js

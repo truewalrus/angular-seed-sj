@@ -3,7 +3,7 @@
 
 // Declare app level module which depends on filters, and services
 
-var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ui', 'ui.bootstrap'])
+var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.services', 'ui', 'ui.bootstrap'])
  app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     
 	// angular front end routes
@@ -17,3 +17,9 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
 	*/
 	$locationProvider.html5Mode(true);
   }]);
+  
+  /*app.run(function($rootScope, Facebook) {
+
+  $rootScope.Facebook = Facebook;
+
+})*/

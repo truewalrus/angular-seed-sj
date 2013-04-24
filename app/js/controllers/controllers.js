@@ -3,7 +3,7 @@
 /* Controllers */
 
 
-function MyCtrl1($scope/*, Facebook, $rootScope*/) {
+angular.module('myApp').controller('MyCtrl1', ['$scope', 'Facebook', function($scope, Facebook) {
 /*	$scope.test = "test";
 $scope.alerts = [
     { type: 'error', msg: 'Oh snap! Change a few things up and try submitting again.' }, 
@@ -33,12 +33,15 @@ $scope.alerts = [
 		Facebook.logout();
 	}
 	*/
+	console.log("am I crashing right here?");
+	$scope.Facebook = Facebook;
+	console.log("or afterwards");
 
-}
-MyCtrl1.$inject = ['$scope'/*, 'Facebook', '$rootScope'*/];
+
+}]);
 
 
-function MyCtrl2($scope) {
+angular.module('myApp').controller('MyCtrl2', ['$scope', function($scope) {
     $scope.multiCheck = [
         {text: "Is Brandon cool?", value: false},
         {text: "Is Jon cool?", value: false},
@@ -48,5 +51,4 @@ function MyCtrl2($scope) {
     $scope.testModel =  "test";
 
     $scope.userType = 'guest';
-}
-MyCtrl2.$inject = ['$scope'];
+}]);

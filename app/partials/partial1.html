@@ -1,85 +1,3 @@
- <!--   <script type="text/javascript">
-      (function() {
-       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-       po.src = 'https://apis.google.com/js/client:plusone.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-     })();
-	 
-		function render() {
-			gapi.signin.render('customBtn', {
-			  'callback': 'signinCallback',
-			  'clientid': 'xxxxxxxxxx.apps.googleusercontent.com',
-			  'cookiepolicy': 'single_host_origin',
-			  'scope': 'https://www.googleapis.com/auth/plus.login'
-			});
-		}
-  function signinCallback(authResult) {
-    // Respond to signin, see https://developers.google.com/+/web/signin/
-  }
-	 
-    </script>-->
-	
-	<div id="fb-root"></div>
-<script>
-/*  // Additional JS functions here
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '281909378612016', // App ID
-
-    });
-	
-	FB.getLoginStatus(function(response) {
-	  if (response.status === 'connected') {
-		// connected
-	  } 
-	  else if (response.status === 'not_authorized') {
-		// not_authorized
-		login();
-	  } 
-	  else {
-		// not_logged_in
-		login();
-	  }
-	 });
-
-    // Additional init code here
-  };
-  
-  
-  function login() {
-    FB.login(function(response) {
-        if (response.authResponse) {
-            // connected
-			testAPI();
-        } else {
-            // cancelled
-        }
-    });
-}
-
-
-	function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-        console.log('Good to see you, ' + response.name + '.');
-    });
-}
-
-
-
-  // Load the SDK Asynchronously
-  (function(d){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     ref.parentNode.insertBefore(js, ref);
-   }(document));
-   
-   */
-</script>
-
-
 <div ng-controller = "MyCtrl1">
 <p>This is the partial for view 1.</p>
 
@@ -89,44 +7,13 @@
  
 
 
-    <div ng-show="Facebook.token">
+    <div ng-show="Facebook.fbResponse">
         <h4>Access Token:</h4>
-        <p ng-bind="Facebook.token.accessToken"></p>
+        <p ng-bind="Facebook.fbResponse.accessToken"></p>
 		<button class='btn btn-small' ng-click="Facebook.logout()">Logout</button>
     </div>
 
 <div id='fb-root'></div>
 
-<!--<span id="signinButton">
-  <span class="g-signin"
-    data-callback="signinCallback"
-    data-clientid="221691349175.apps.googleusercontent.com"
-    data-cookiepolicy="none"
-    data-requestvisibleactions="http://schemas.google.com/AddActivity"
-    data-scope="https://www.googleapis.com/auth/plus.login">
-  </span>
-</span>
--->
-<!--
-<div>
-  <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
-  <button class='btn' ng-click="addAlert()">Add Alert</button>
-</div>
-</div>
--->
-<!--
-<input ui-date name="DateOfBirth"></input>
-<div ng-model="date" ui-date></div>-->
-<!--
- <form name="myForm">
-		<ui-form-input ng-model = "userType" ui-required></ui-form-input>
-		<ui-form-input type = "multicheckbox" label = "choose one" ng-model = "multiCheck" ui-required="1"></ui-form-input>
-        userType = {{userType}}<br>
-        myForm.input.$valid = {{myForm.input.$valid}}<br>
-        myForm.input.$error = {{myForm.input.$error}}<br>
-        myForm.$valid = {{myForm.$valid}}<br>
-        myForm.$error.required = {{!!myForm.$error.required}}<br>
-    </form>-->
-	
 	
     </div>

@@ -24,7 +24,6 @@ Sample Form Usage:
         {text: "Box 3", value: true}
     ];
 */
-
 angular.module('myApp.directives', [])
 .directive('jbFormInput', function() {
 
