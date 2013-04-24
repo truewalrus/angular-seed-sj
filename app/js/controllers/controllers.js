@@ -3,7 +3,7 @@
 /* Controllers */
 
 
-angular.module('myApp').controller('MyCtrl1', ['$scope', 'Facebook', function($scope, Facebook) {
+var MyCtrl1 = ['$scope', 'Facebook', function($scope, Facebook) {
 /*	$scope.test = "test";
 $scope.alerts = [
     { type: 'error', msg: 'Oh snap! Change a few things up and try submitting again.' }, 
@@ -38,10 +38,10 @@ $scope.alerts = [
 	console.log("or afterwards");
 
 
-}]);
+}];
 
 
-angular.module('myApp').controller('MyCtrl2', ['$scope', function($scope) {
+var MyCtrl2 = ['$scope', function($scope) {
     $scope.multiCheck = [
         {text: "Is Brandon cool?", value: false},
         {text: "Is Jon cool?", value: false},
@@ -51,4 +51,4 @@ angular.module('myApp').controller('MyCtrl2', ['$scope', function($scope) {
     $scope.testModel =  "test";
 
     $scope.userType = 'guest';
-}]);
+}];

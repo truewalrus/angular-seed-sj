@@ -3,7 +3,7 @@
 
 // Declare app level module which depends on filters, and services
 
-var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.services', 'ui', 'ui.bootstrap'])
+var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.services', 'fbprovider', 'ui', 'ui.bootstrap'])
  app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     
 	// angular front end routes

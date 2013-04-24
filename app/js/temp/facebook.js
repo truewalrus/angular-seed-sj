@@ -2,7 +2,7 @@ angular.module('myApp.services', [])
 .service('Facebook', function($q, $timeout){
 	this.fbResponse	= '';
 	
-	this.login = function(){
+	//this.login = function(){
 			var resp = $q.defer();
 			FB.login(function(response) {
 				$timeout(function(){resp.resolve(response.authResponse)}, 1);

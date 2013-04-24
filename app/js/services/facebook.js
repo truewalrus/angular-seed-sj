@@ -1,4 +1,4 @@
-angular.module('myApp.services', [])
+angular.module('fbprovider', [])
 .service('Facebook', function($q, $timeout){
 	this.fbResponse	= '';
 	
