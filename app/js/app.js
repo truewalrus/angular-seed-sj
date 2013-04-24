@@ -12,5 +12,8 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.dir
     $routeProvider.otherwise({redirectTo: '/view1'});
 	
 	// fix to remove '#' from url strings in browser
+	/*
+		IE 10 is oldest IE that html5mode will work on
+	*/
 	$locationProvider.html5Mode(true);
   }]);
