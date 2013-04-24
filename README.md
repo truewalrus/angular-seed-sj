@@ -58,7 +58,7 @@ The site is hosted using Node.JS
 
 #### Running the Server
 
-* To start the server, open a command prompt, or Cygwin terminal, navigate to the root directory, and type `node server`
+* To start the server, open a command terminal, navigate to the root directory, and type `node server`
 * The terminal should then say `Listening on port 1337`
 
 #### Adding Routes for Backend API Calls
