@@ -28,14 +28,13 @@ $scope.alerts = [
 
     $scope.userType = 'guest';*/
 	//$rootScope.Facebook = 'Facebook';
-	/*$scope.login = 	Facebook.login;
+	/*$scope.login = Facebook.login;
 	$scope.logout = function(){
 		Facebook.logout();
 	}
 	*/
 	$scope.Facebook = Facebook;
-};
-
+}
 MyCtrl1.$inject = ['$scope', 'Facebook'];
 
 
@@ -49,6 +48,5 @@ function MyCtrl2($scope) {
     $scope.testModel =  "test";
 
     $scope.userType = 'guest';
-};
-
+}
 MyCtrl2.$inject = ['$scope'];
