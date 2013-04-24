@@ -9,8 +9,8 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'app/js/temp/*.js',
-        dest: 'app/production/angular.min.js'
+        src: ['app/js/directives/*.js', 'app/js/controllers/*.js', 'app/js/*.js', 'app/js/filters/*.js', 'app/js/services/*.js'],
+        dest: 'app/production/build.js'
       }
     },
 	less: {
