@@ -35,3 +35,17 @@ For example, to add a new directive:
 * To add 3rd party javascript, drag minified (.min.js) files into app/lib/third-party-js and less files into app/less/third-party.
 
 * Adding a new partial still requires a new $routeProvider route in app.js, less files go in base.less
+
+### Back-end
+The site is hosted using Node.JS
+
+#### Initial Installation and Setup
+
+#### Running the Server
+
+* To start the server, open a command prompt, or Cygwin terminal, navigate to the root directory, and type `node server`
+* The terminal should then say "Listening on port 1337"
+
+#### Adding Routes for Backend API Calls
+
+#### Adding custom modules
