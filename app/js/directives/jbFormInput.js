@@ -101,22 +101,22 @@ angular.module('myApp.directives', [])
                     ctrl.$setValidity('required',false);
 					
 					var checkVal = function(value, oldValue) {
-                            if (oldValue != value) {
-                                if (value) {
-                                    scope.checked++;
-                                }
-                                else {
-                                    scope.checked--;
-                                }
+						if (oldValue != value) {
+							if (value) {
+								scope.checked++;
+							}
+							else {
+								scope.checked--;
+							}
 
-                                if (scope.checked >= scope.jbRequired) {
-                                    ctrl.$setValidity('required',true);
-                                }
-                                else {
-                                    ctrl.$setValidity('required',false);
-                                }
-                            }
-                        };
+							if (scope.checked >= scope.jbRequired) {
+								ctrl.$setValidity('required',true);
+							}
+							else {
+								ctrl.$setValidity('required',false);
+							}
+						}
+					};
 
                     for (var i = 0; i < scope.ngModel.length; i++) {
                         if (scope.ngModel[i].value) {

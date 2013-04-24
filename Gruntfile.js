@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 			jquery: true,
 			node: true,
 			sub: true,
-			globals: { "angular": false }
+			globals: { "angular": false, "FB": false, "window": false, "document":false}
 		}
     },
 	
