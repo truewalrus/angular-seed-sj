@@ -2,8 +2,8 @@
 
 /* Controllers */
 
-
-var MyCtrl1 = ['$scope', 'Facebook', function($scope, Facebook) {
+function MyCtrl1($scope, Facebook){
+/*var MyCtrl1 = ['$scope', 'Facebook', function($scope, Facebook) {
 /*	$scope.test = "test";
 $scope.alerts = [
     { type: 'error', msg: 'Oh snap! Change a few things up and try submitting again.' }, 
@@ -33,15 +33,13 @@ $scope.alerts = [
 		Facebook.logout();
 	}
 	*/
-	console.log("am I crashing right here?");
 	$scope.Facebook = Facebook;
-	console.log("or afterwards");
+};
+
+MyCtrl1.$inject = ['$scope', 'Facebook'];
 
 
-}];
-
-
-var MyCtrl2 = ['$scope', function($scope) {
+function MyCtrl2($scope) {
     $scope.multiCheck = [
         {text: "Is Brandon cool?", value: false},
         {text: "Is Jon cool?", value: false},
@@ -51,4 +49,6 @@ var MyCtrl2 = ['$scope', function($scope) {
     $scope.testModel =  "test";
 
     $scope.userType = 'guest';
-}];
+};
+
+MyCtrl2.$inject = ['$scope'];
