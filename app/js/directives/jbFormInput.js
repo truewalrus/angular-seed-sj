@@ -25,7 +25,7 @@ Sample Form Usage:
     ];
 */
 'use strict';
-angular.module('myApp.directives', [])
+angular.module('myApp.directives')
 .directive('jbFormInput', function() {
 
     /**

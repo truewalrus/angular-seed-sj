@@ -48,5 +48,10 @@ function MyCtrl2($scope) {
     $scope.testModel =  "test";
 
     $scope.userType = 'guest';
+	
+	
+	$scope.timepicker = {
+		"time": ""
+	};
 }
 MyCtrl2.$inject = ['$scope'];

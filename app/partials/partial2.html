@@ -16,6 +16,16 @@
         myForm.$valid = {{myForm.$valid}}<br>
         myForm.$error.required = {{!!myForm.$error.required}}<br>
     </form>
+ 
+	<div class = "control-group input-append">
+		<input type="text" placeholder = "Time" ng-model="timepicker.time" as-time-picker>
+		<button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
+	</div>
+	
+	<div class="control-group input-append">
+     <input type="text" ng-model="datepicker.date" data-date-format="dd/mm/yyyy" as-date-picker>
+     <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+ </div>
 
 </div>
 
