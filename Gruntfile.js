@@ -4,6 +4,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    //uglify minifies and concatenates all angular.js files into build.js for production
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
@@ -19,6 +20,7 @@ module.exports = function(grunt) {
         dest: 'app/production/build.js'
       }
     },
+    //converts less to css
 	less: {
 		base: {
 			src: ['app/less/base/*.less', 'app/less/third-party/*.less'],
@@ -28,6 +30,7 @@ module.exports = function(grunt) {
 			}
 		}
     },
+    //runs all angularjs files through jshint for linting purposes
 	jshint: {
 		all: ['Gruntfile.js', 
 				'app/js/*.js', 
@@ -36,21 +39,24 @@ module.exports = function(grunt) {
 				'app/js/filters/*.js', 
 				'app/js/controllers/*.js'
 			],
+        //options set to make angular agree with jshint a bit more
 		options:{
 			globalstrict: true,
 			jquery: true,
 			node: true,
 			sub: true,
+            //globals are set so that jshint ignores them when there are no ways to workaround them
 			globals: { "angular": false, "FB": false, "window": false, "document":false, "navigator": false}
 		}
     },
-	
+    //not currently set up, karma is a testing plugin
 	karma: {
 		unit: {
 			configFile: 'config/karma.conf.js',
 			autoWatch: true
 		}
 	},
+    //concatenates all third party js inclusions into one file for easier script inclusion in index.html
 	concat: {
     dist: {
 		src: ['app/lib/third-party-js/*.js'],
@@ -76,7 +82,7 @@ module.exports = function(grunt) {
   //Load the plugin that provides the "concatenate" task.
   grunt.loadNpmTasks('grunt-contrib-concat');
 
-  // Default task(s).
+  // Default task(s). Add task here if you want it to run every time grunt is run
   grunt.registerTask('default', ['uglify', 'less', 'jshint', 'concat']);
   
   

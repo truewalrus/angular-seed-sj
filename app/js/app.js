@@ -17,12 +17,7 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.s
 	*/
 	$locationProvider.html5Mode(true);
   }]);
-  
-  /*app.run(function($rootScope, Facebook) {
 
-  $rootScope.Facebook = Facebook;
-
-})*/
 
 //These need to be defined here in order for the module names to be succesfully reused
 //All non-3rd party modules should be defined as angular.module('myApp.[type]').[type]
