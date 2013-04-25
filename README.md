@@ -19,7 +19,7 @@ All frontend code is located in app/
 
 app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled.  
  
-For example, to add a new directive:  
+####For example, to add a new directive:  
 
 * Open `app/js/directives`
 * Create a new .js file titled as the name of your directive ([directiveName].js)
@@ -30,7 +30,7 @@ For example, to add a new directive:
 * Add all third party minified dependency js files to `app/lib/third-party-js` and all third party less files to `app/less/third-party`
 * Run `grunt` in command prompt and it's done! Use as normal.  
 
-To add a new partial:
+####To add a new partial:
 * Create a new html file in `app/partials`
 * Open `app/js/app.js`
 * Add routing to your new partial
