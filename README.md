@@ -21,20 +21,36 @@ app/js hosts all js files. To add new files, simply create a new file within any
  
 For example, to add a new directive:  
 
-  * Open app/js/directives
-  * Create a new .js file titled as the name of your directive ([directiveName].js)
-  * In your directive, write `angular.module("myApp.directives").directive("[directiveName]" function() { [directive functionality] });`
-  * Add all third party minified dependency js files to app/lib/third-party-js and all third party less files
- to app/less/third-party
-  * Run `grunt` in command prompt and it's done! Use as normal.  
+* Open `app/js/directives`
+* Create a new .js file titled as the name of your directive ([directiveName].js)
+* In your directive, write   
 
+		angular.module("myApp.directives").directive("[directiveName]" function() { [directive functionality] });
 
+* Add all third party minified dependency js files to `app/lib/third-party-js` and all third party less files to `app/less/third-party`
+* Run `grunt` in command prompt and it's done! Use as normal.  
 
-		angular.module("myApp.directives").directive("directiveName")
+To add a new partial:
+* Create a new html file in `app/partials`
+* Open `app/js/app.js`
+* Add routing to your new partial
+		
+		$routeProvider.when('/[partialName]', {templateUrl: 'partials/[partialName].html'});
 
-* To add 3rd party javascript, drag minified (.min.js) files into app/lib/third-party-js and less files into app/less/third-party.
+* Navigate to `app/js/controllers.js` and create a new .js file
+* In the js file, create a new controller
+		
+		function [controllerName] ($scope){}
+		[controllerName].$inject = ['$scope'];
 
-* Adding a new partial still requires a new $routeProvider route in app.js, less files go in base.less
+* In the partial, set up ng-controller to use the controller you just created
+		
+		<div ng-controller = '[controllerName]'> 
+			//html code
+		</div>
+
+* Run `node server` in a command prompt
+* Navigate to the site `localhost:1337/[partialName] to see it
 
 ### Back-end
 The site is hosted using Node.JS
