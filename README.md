@@ -2,6 +2,10 @@
 
 This is an easily modifiable angular-seed incorporating angular-ui, bootstrap, and currently jQuery.
 
+## Dependencies
+* [Nodejs] (http://nodejs.org/)
+* [MongoDB] (http://www.mongodb.org/)
+
 ## Server Setup
 
 After pulling, navigate to the main folder and open cmd prompt, enter and run:
@@ -51,7 +55,7 @@ app/js hosts all js files. To add new files, simply create a new file within any
 
 * Run `grunt` to compile the controller
 * Run `node server` in a command prompt
-* Navigate to the site `localhost:1337/[partialName] to see it
+* Navigate to the site `localhost:1337/[partialName]` to see it
 
 ### Back-end
 The site is hosted using Node.JS
