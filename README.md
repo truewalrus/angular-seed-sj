@@ -29,7 +29,7 @@ All frontend code is located in `app/`
 * Create a new .js file titled as the name of your directive ([directiveName].js)
 * In your directive, write   
 
-		angular.module("myApp.directives").directive("[directiveName]" function() { [directive functionality] });
+		angular.module("myApp.directives").directive("[directiveName]", function() { [directive functionality] });
 
 * Add all third party minified dependency js files to `app/lib/third-party-js` and all third party less files to `app/less/third-party`
 * Run `grunt` in command prompt and it's done! Use as normal.
