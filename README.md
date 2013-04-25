@@ -3,8 +3,8 @@
 This is an easily modifiable angular-seed incorporating angular-ui, bootstrap, and currently jQuery.
 
 ## Dependencies
-* [Nodejs] (http://nodejs.org/)
-* [MongoDB] (http://www.mongodb.org/)
+* [Nodejs] (http://nodejs.org/) - backend platform entirely in javascript
+* [MongoDB] (http://www.mongodb.org/) - non-relational database
 
 ## Server Setup
 
