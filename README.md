@@ -14,7 +14,7 @@ In order to view the web page, go to localhost:1337 in a browser
 ## Directory Structure
 This seed is setup to easily incorporate new files without having to often modify app.js or index.html.
 
-### Front-end
+### Front-end JONLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 All frontend code is located in app/  
 
 app/js hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled.  
@@ -53,9 +53,7 @@ app/js hosts all js files. To add new files, simply create a new file within any
 * Navigate to the site `localhost:1337/[partialName] to see it
 
 ### Back-end
-The site is hosted using Node.JS  
-
-STEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEVE
+The site is hosted using Node.JS
 
 #### Initial Installation and Setup
 *This assumes that the user has Node.JS already installed.  If they don't, see the [Node Docs](http://nodejs.org/) for installation instructions*  
