@@ -49,6 +49,7 @@ app/js hosts all js files. To add new files, simply create a new file within any
 			//html code
 		</div>
 
+* Run `grunt` to compile the controller
 * Run `node server` in a command prompt
 * Navigate to the site `localhost:1337/[partialName] to see it
 
