@@ -38,7 +38,8 @@ $scope.alerts = [
 MyCtrl1.$inject = ['$scope', 'Facebook'];
 
 
-function MyCtrl2($scope) {
+function MyCtrl2($scope, user) {
+
     $scope.multiCheck = [
         {text: "Is Brandon cool?", value: false},
         {text: "Is Jon cool?", value: false},
@@ -49,9 +50,29 @@ function MyCtrl2($scope) {
 
     $scope.userType = 'guest';
 	
-	
+	$scope.login = function() {
+        user.login('Jon', {},
+        function(data){
+            console.log(data);
+        },
+        function(){
+            console.log("error2");
+        });
+    };
+
+
+    $scope.signUp = function(){
+        user.signUp('rekursiv', 'hunter2',
+            function(data){
+                console.log(data);
+            },
+            function(data){
+                console.log(data);
+            });
+    };
+
 	$scope.timepicker = {
 		"time": ""
 	};
 }
-MyCtrl2.$inject = ['$scope'];
+MyCtrl2.$inject = ['$scope', 'user'];

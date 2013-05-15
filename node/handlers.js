@@ -42,6 +42,8 @@ db_connector.open(function(err, db) {
 				console.log("The users collection doesn't exist.  Creating it now.");
 				populateDB();
 			}
+
+            db.ensureIndex('users', {'id': 1}, {unique: true, dropDups: true});
 		});
 	}
 });
@@ -57,11 +59,13 @@ var populateDB = function() {
 		{
 			fname: "Steven",
 			lname: "Cipriano",
+            password: "testpw",
 			age: 24
 		},
 		{
 			fname: "Jon",
 			lname: "Levy",
+            password: "bettertest",
 			age: 24
 		}
 	];
@@ -89,6 +93,7 @@ exports.index = index;
 // 2.2 'api/test1' Handler
 function test1(request, response) {
 	console.log('sending test1');
+    console.log(request.id);
 	response.send('test1');
 }
 exports.test1 = test1;
@@ -129,6 +134,30 @@ function findUserByAge(request, response) {
 }
 exports.findUserByAge = findUserByAge;
 
-
-
 // 3. Post Requests
+
+function userLogin(request, response){
+    console.log(request.body);
+
+    db_connector.collection('users', function(err, collection) {
+        collection.find({'username': request.body.username, 'password': request.body.password}).toArray(function(err, items) {
+            response.send(items);
+        });
+    });
+}
+exports.userLogin = userLogin;
+
+function createUser(request, response){
+    db_connector.collection('users', function(err, collection){
+        collection.insert({'username': request.body.username, 'password': request.body.password, 'id': request.body.username.toUpperCase()}, {safe: true}, function(err, data){
+            if (err) {
+                response.send("Duplicate Username", 400);
+            }
+            else {
+                console.log("Data added as " + data[0]._id);
+                response.send(data[0]);
+            }
+        });
+    });
+}
+exports.createUser = createUser;

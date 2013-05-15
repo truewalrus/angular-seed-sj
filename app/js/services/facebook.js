@@ -1,3 +1,5 @@
+/*Service for getting facebook login*/
+
 'use strict';
 angular.module('myApp.services')
 .service('Facebook', function($q, $timeout){

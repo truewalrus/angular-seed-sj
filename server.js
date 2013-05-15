@@ -61,6 +61,7 @@ var app = express();
 
 // 4.1 Set Static File Path
 app.use(express.static(__dirname + '/app'));
+app.use(express.bodyParser());
 
 
 /*
@@ -96,6 +97,9 @@ app.get('/api/user/age/:age', handlers.findUserByAge);
 	any get calls that do not match an above api call will direct to the angularjs app to handle front-end routing
 */
 app.get('*', handlers.index);
+
+app.post('/api/user/login', handlers.userLogin);
+app.post('/api/user/create', handlers.createUser);
 
 
 /*
