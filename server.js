@@ -95,7 +95,13 @@ app.get('/api/user/fname/:fname', handlers.findUserByFname);
 */
 app.get('/api/user/age/:age', handlers.findUserByAge);
 
-// 5.5 catch-all get call 
+// 5.5 user logout call
+/*
+	
+*/
+app.get('/api/user/logout', handlers.userLogout);
+
+// 5.55 catch-all get call 
 /*
 	any get calls that do not match an above api call will direct to the angularjs app to handle front-end routing
 */

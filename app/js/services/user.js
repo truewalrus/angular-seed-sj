@@ -16,7 +16,7 @@ angular.module("myApp.services")
 
         //login -- email/display name, password,
         this.login = function(username, password, success, error){
-            $http.post('api/user/login', {'username': username}).
+            $http.post('api/user/login', {'username': username, 'password': password}).
                 success(function(data) {
                     success(data);
                 }).
@@ -36,5 +36,15 @@ angular.module("myApp.services")
                 });
 
         };
+		
+		this.logout = function(success, error) {
+			$http.get('api/user/logout').
+				success(function(data) {
+					success(data);
+				}).
+				error(function(data) {
+					error(data);
+				});
+		};
 
 }]);

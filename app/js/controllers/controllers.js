@@ -66,7 +66,7 @@ function MyCtrl2($scope, user) {
     $scope.userType = 'guest';
 	
 	$scope.login = function() {
-        user.login('Jon', {},
+        user.login('rekursiv', 'hunter2',
         function(data){
             console.log(data);
         },
@@ -88,7 +88,7 @@ function MyCtrl2($scope, user) {
 
 
     $scope.checkSession = function(){
-        user.checkSession('Jon', {},
+        user.checkSession('rekursiv', {},
             function(data){
                 console.log(data);
             },
@@ -96,6 +96,15 @@ function MyCtrl2($scope, user) {
                 console.log(data);
             });
     };
+	
+	$scope.logoutUser = function() {
+		user.logout( function(data) {
+			console.log(data);
+		},
+		function(data) {
+			console.log(data);
+		});
+	};
 
 	$scope.timepicker = {
 		"time": ""

@@ -43,7 +43,7 @@ db_connector.open(function(err, db) {
 				populateDB();
 			}
 
-            db.ensureIndex('users', {'id': 1}, {unique: true, dropDups: true});
+            db.ensureIndex('users', {'id': 1}, {unique: true, dropDups: true}, function() {});
 		});
 	}
 });
@@ -134,6 +134,19 @@ function findUserByAge(request, response) {
 }
 exports.findUserByAge = findUserByAge;
 
+
+function userLogout(request, response) {
+	request.session.destroy(function(err){
+		if (err) {
+			response.send("Logout failed", 401);
+		}
+		else {
+			response.send("Logout Successful", 200);
+		}
+	});
+}
+exports.userLogout = userLogout;
+
 // 3. Post Requests
 
 function userLogin(request, response){
@@ -142,11 +155,18 @@ function userLogin(request, response){
     db_connector.collection('users', function(err, collection) {
         collection.find({'username': request.body.username, 'password': request.body.password}).toArray(function(err, items) {
             response.send(items);
+			
+			if(items.length > 0) {
+				request.session.email = request.body.username;
+				request.session.cookie.maxAge = 1000 * 60 * 60;
+				
+			}
+			
+			if (err) {
+				console.log('error here: ' + err);
+			}
         });
     });
-
-    request.session.email = request.body.username;
-    request.session.cookie.maxAge = 1000 * 60 * 60;
 }
 exports.userLogin = userLogin;
 
