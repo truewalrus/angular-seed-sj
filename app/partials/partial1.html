@@ -2,7 +2,7 @@
 <p>This is the partial for view 1.</p>
 
 
-<button ng-click = "Facebook.login()">test facebook</button>
+<button ng-click = "fbLogin()">test facebook</button>
 
  
 
@@ -11,10 +11,8 @@
         <h4>Access Token:</h4>
         <p ng-bind="Facebook.fbResponse.accessToken"></p>
     </div>
-	<button class='btn btn-small' ng-click="Facebook.logout()">Logout</button>
+	<button class='btn btn-small' ng-click="fbLogout()">Logout</button>
 
-<div id='fb-root'></div>
-
-
-	
-    </div>
+    Cookie value: {{ accessToken }}
+    <button class='btn btn-small' ng-click="changeCookie()">OHNOESCOOKIENOOOOOO</button>
+</div>

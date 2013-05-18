@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function MyCtrl1($scope, Facebook){
+function MyCtrl1($scope, $cookies, Facebook){
 /*var MyCtrl1 = ['$scope', 'Facebook', function($scope, Facebook) {
 /*	$scope.test = "test";
 $scope.alerts = [
@@ -34,8 +34,23 @@ $scope.alerts = [
 	}
 	*/
 	$scope.Facebook = Facebook;
+
+    $scope.fbLogin = function() { Facebook.login($scope); };
+    $scope.fbLogout = function() { Facebook.logout($scope); };
+
+    $scope.accessToken = $cookies.cookieValue;
+
+    $scope.$watch('Facebook.fbResponse', function(newVal) {
+        console.debug("Watched value changed.");
+        $cookies.cookieValue = newVal ? newVal.accessToken : '';
+        $scope.accessToken = $cookies.cookieValue;
+    });
+
+    $scope.changeCookie = function() {
+        $cookies.cookieValue = "Hello World!";
+    };
 }
-MyCtrl1.$inject = ['$scope', 'Facebook'];
+MyCtrl1.$inject = ['$scope', '$cookies', 'Facebook'];
 
 
 function MyCtrl2($scope, user) {
@@ -63,6 +78,17 @@ function MyCtrl2($scope, user) {
 
     $scope.signUp = function(){
         user.signUp('rekursiv', 'hunter2',
+            function(data){
+                console.log(data);
+            },
+            function(data){
+                console.log(data);
+            });
+    };
+
+
+    $scope.checkSession = function(){
+        user.checkSession('Jon', {},
             function(data){
                 console.log(data);
             },

@@ -1,7 +1,7 @@
 //Service for user login
 'use strict';
 angular.module("myApp.services")
-    .service('user', function($http){
+    .service('user', ['$http', function($http){
 
         //signup
         this.signUp = function(username, password, success, error){
@@ -15,8 +15,8 @@ angular.module("myApp.services")
         };
 
         //login -- email/display name, password,
-        this.login = function(id, password, success, error){
-            $http.post('api/user/login', {'id': id}).
+        this.login = function(username, password, success, error){
+            $http.post('api/user/login', {'username': username}).
                 success(function(data) {
                     success(data);
                 }).
@@ -26,4 +26,15 @@ angular.module("myApp.services")
 
         };
 
-});
+        this.checkSession = function(username, password, success, error){
+            $http.post('api/user/checkSession', {'username': username}).
+                success(function(data) {
+                    success(data);
+                }).
+                error(function(data) {
+                    error(data);
+                });
+
+        };
+
+}]);

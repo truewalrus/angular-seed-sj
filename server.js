@@ -58,10 +58,13 @@ var app = express();
 /* 
 	4. Configuration
 */
+app.use(express.cookieParser());
+app.use(express.session({ secret: "keyboard cat" }));
 
 // 4.1 Set Static File Path
 app.use(express.static(__dirname + '/app'));
 app.use(express.bodyParser());
+
 
 
 /*
@@ -100,6 +103,7 @@ app.get('*', handlers.index);
 
 app.post('/api/user/login', handlers.userLogin);
 app.post('/api/user/create', handlers.createUser);
+app.post('/api/user/checkSession', handlers.checkSession);
 
 
 /*

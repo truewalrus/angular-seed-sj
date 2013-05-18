@@ -144,6 +144,9 @@ function userLogin(request, response){
             response.send(items);
         });
     });
+
+    request.session.email = request.body.username;
+    request.session.cookie.maxAge = 1000 * 60 * 60;
 }
 exports.userLogin = userLogin;
 
@@ -161,3 +164,15 @@ function createUser(request, response){
     });
 }
 exports.createUser = createUser;
+
+function checkSession(request,response){
+    console.log(request.session.email);
+
+    if(request.session.email){
+        response.send("Ok");
+    }
+    else{
+        response.send("Session not found" ,401);
+    }
+}
+exports.checkSession = checkSession;
