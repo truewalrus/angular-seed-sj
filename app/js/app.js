@@ -3,12 +3,13 @@
 
 // Declare app level module which depends on filters, and services
 
-var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.services', 'ui', 'ngCookies']);
+var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.services', 'myApp.controllers', 'ui', 'ngCookies']);
  app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
 	// angular front end routes
 	$routeProvider.when('/view1', {templateUrl: 'partials/partial1.html'});
     $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
+	$routeProvider.when('/sign-in', {templateUrl: 'partials/sign-in.html'});
     $routeProvider.otherwise({redirectTo: '/view1'});
 	
 	// fix to remove '#' from url strings in browser
@@ -35,3 +36,4 @@ app.run(['$rootScope', function($rootScope) {
 angular.module('myApp.services', []);
 angular.module('myApp.filters', []);
 angular.module('myApp.directives',[]);
+angular.module('myApp.controllers', []);

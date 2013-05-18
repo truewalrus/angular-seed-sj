@@ -101,6 +101,9 @@ app.get('/api/user/age/:age', handlers.findUserByAge);
 */
 app.get('/api/user/logout', handlers.userLogout);
 
+// 5.6 delete user
+app.get('/api/user/delete', handlers.userDelete);
+
 // 5.55 catch-all get call 
 /*
 	any get calls that do not match an above api call will direct to the angularjs app to handle front-end routing

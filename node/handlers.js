@@ -147,19 +147,49 @@ function userLogout(request, response) {
 }
 exports.userLogout = userLogout;
 
+
+function userDelete(request, response) {
+
+	var cur_username = request.session.username;
+
+	db_connector.collection('users', function(err, collection) {
+        collection.remove({'id': request.session.username.toUpperCase()}, function(err) {
+			if (err) {
+				console.log('error here: ' + err);
+				response.send({'message':'Failed to delete user'}, 401);
+			}
+			else {
+				request.session.destroy(function(err){
+					if (err) {
+						response.send('Session destroy failed', 401);
+					}
+					else {
+						response.send({'message':'Deleted user ' + cur_username}, 200);
+					}
+				});
+			}
+        });
+    });
+}
+exports.userDelete = userDelete;
+
 // 3. Post Requests
 
 function userLogin(request, response){
-    console.log(request.body);
 
     db_connector.collection('users', function(err, collection) {
-        collection.find({'username': request.body.username, 'password': request.body.password}).toArray(function(err, items) {
-            response.send(items);
+        collection.find({'id': request.body.username.toUpperCase(), 'password': request.body.password}).toArray(function(err, items) {
+            
 			
 			if(items.length > 0) {
-				request.session.email = request.body.username;
+				request.session.username = request.body.username;
 				request.session.cookie.maxAge = 1000 * 60 * 60;
 				
+				response.send({"message":"Login Successful", "username":items[0].username});
+			}
+			
+			if(items.length == 0) {
+				response.send("Incorrect username and/or password!!!", 401);
 			}
 			
 			if (err) {
@@ -174,10 +204,10 @@ function createUser(request, response){
     db_connector.collection('users', function(err, collection){
         collection.insert({'username': request.body.username, 'password': request.body.password, 'id': request.body.username.toUpperCase()}, {safe: true}, function(err, data){
             if (err) {
-                response.send("Duplicate Username", 400);
+                response.send("Username already exists!!!", 400);
             }
             else {
-                console.log("Data added as " + data[0]._id);
+                console.log("Data added as " + data[0].id);
                 response.send(data[0]);
             }
         });
@@ -186,13 +216,12 @@ function createUser(request, response){
 exports.createUser = createUser;
 
 function checkSession(request,response){
-    console.log(request.session.email);
 
-    if(request.session.email){
-        response.send("Ok");
+    if(request.session.username){
+        response.send({'message':"Ok", 'username':request.session.username});
     }
     else{
-        response.send("Session not found" ,401);
+        response.send("Session not found", 401);
     }
 }
 exports.checkSession = checkSession;

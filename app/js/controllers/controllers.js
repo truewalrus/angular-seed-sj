@@ -66,12 +66,12 @@ function MyCtrl2($scope, user) {
     $scope.userType = 'guest';
 	
 	$scope.login = function() {
-        user.login('rekursiv', 'hunter2',
+        user.login('rekursiv', 'hunter3',
         function(data){
             console.log(data);
         },
-        function(){
-            console.log("error2");
+        function(data){
+            console.log(data);
         });
     };
 

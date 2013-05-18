@@ -26,8 +26,8 @@ angular.module("myApp.services")
 
         };
 
-        this.checkSession = function(username, password, success, error){
-            $http.post('api/user/checkSession', {'username': username}).
+        this.checkSession = function(success, error){
+            $http.post('api/user/checkSession').
                 success(function(data) {
                     success(data);
                 }).
@@ -39,6 +39,17 @@ angular.module("myApp.services")
 		
 		this.logout = function(success, error) {
 			$http.get('api/user/logout').
+				success(function(data) {
+					success(data);
+				}).
+				error(function(data) {
+					error(data);
+				});
+		};
+		
+		
+		this.deleteLoggedIn = function(success, error) {
+			$http.get('api/user/delete').
 				success(function(data) {
 					success(data);
 				}).
