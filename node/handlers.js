@@ -28,6 +28,7 @@
 */
 var mongodb = require('mongodb'),
 	mongoserver = new mongodb.Server('localhost', mongodb.Connection.DEFAULT_PORT, {'auto-reconnect': true}),
+    ObjectID = require('mongodb').ObjectID,
 	db_connector = new mongodb.Db('test1', mongoserver, {'strict': true});
 
 // 1.2 Open connection to db
@@ -79,7 +80,40 @@ var populateDB = function() {
 	});
 };
 
+function findById(id, fn) {
+    console.log("Finding by ID");
+    db_connector.collection('users', function(err, collection) {
+        collection.find({'_id': ObjectID(id)}).toArray(function(err, items) {
+            if (err) { return fn(err); }
 
+            if (items.length > 0) {
+                return fn(null, items[0]);
+            }
+            else {
+                return fn(new Error('User ' + id + ' does not exist'));
+            }
+        });
+    });
+}
+exports.findById = findById;
+
+function findByUsername(username, fn) {
+    console.log("Finding by Username");
+
+    db_connector.collection('users', function(err, collection) {
+        collection.find({'username': username}).toArray(function(err, items) {
+            if (err) { return fn(err); }
+
+            if (items.length > 0) {
+                return fn(null, items[0]);
+            }
+            else {
+                return fn(null, null);
+            }
+        });
+    });
+}
+exports.findByUsername = findByUsername;
 
 // 2. Get Requests
 
@@ -125,7 +159,7 @@ exports.findUserByFname = findUserByFname;
 function findUserByAge(request, response) {
 	
 	var age = parseInt(request.params.age);
-	
+
 	db_connector.collection('users', function(err, collection) {
 		collection.find({'age': age}).toArray(function(err, items) {
 			response.send(items);
@@ -136,14 +170,17 @@ exports.findUserByAge = findUserByAge;
 
 
 function userLogout(request, response) {
-	request.session.destroy(function(err){
+/*	request.session.destroy(function(err){
 		if (err) {
 			response.send("Logout failed", 401);
 		}
 		else {
 			response.send("Logout Successful", 200);
 		}
-	});
+	});*/
+
+    request.logout();
+    response.send(200);
 }
 exports.userLogout = userLogout;
 
@@ -216,12 +253,12 @@ function createUser(request, response){
 exports.createUser = createUser;
 
 function checkSession(request,response){
-
-    if(request.session.username){
+    response.send(200);
+/*    if(request.session.username){
         response.send({'message':"Ok", 'username':request.session.username});
     }
     else{
         response.send("Session not found", 401);
-    }
+    }*/
 }
 exports.checkSession = checkSession;

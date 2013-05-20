@@ -47,7 +47,31 @@ var port = 1337;
 */
 var express = require('express');
 var handlers = require('./node/handlers');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
+passport.serializeUser(function(user, done) {
+   done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+   handlers.findById(id, function(err, user) {
+        done(err, user);
+   });
+});
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        console.log("Auth: ", username, password);
+        handlers.findByUsername(username, function(err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+            if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+
+            return done(null, user);
+        });
+    }
+))
 
 /*
 	3. Start App With Express
@@ -60,6 +84,8 @@ var app = express();
 */
 app.use(express.cookieParser());
 app.use(express.session({ secret: "keyboard cat" }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // 4.1 Set Static File Path
 app.use(express.static(__dirname + '/app'));
@@ -104,6 +130,24 @@ app.get('/api/user/logout', handlers.userLogout);
 // 5.6 delete user
 app.get('/api/user/delete', handlers.userDelete);
 
+app.post('/api/middleware', function(req, res, next) {
+    console.log("In Middleware");
+    next();
+}, function(request, response, next) {
+        passport.authenticate('local', function(err, user, info) {
+            if (err) { return next(err); }
+            if (!user) {
+                return response.send(401);
+            }
+
+            request.login(user, function(err) {
+                if (err) { return next(err); }
+                console.log("User logged in");
+                return response.send(200);
+            });
+        })(request, response, next);
+});
+
 // 5.55 catch-all get call 
 /*
 	any get calls that do not match an above api call will direct to the angularjs app to handle front-end routing
@@ -112,11 +156,16 @@ app.get('*', handlers.index);
 
 app.post('/api/user/login', handlers.userLogin);
 app.post('/api/user/create', handlers.createUser);
-app.post('/api/user/checkSession', handlers.checkSession);
-
+app.post('/api/user/checkSession', ensureAuthentication, handlers.checkSession);
 
 /*
 	6. Listen On Specified Port
 */
 app.listen(port);
 console.log('Listening on port %d.', port);
+
+function ensureAuthentication(request, response, next) {
+    if (!request.user) { return response.send(401); }
+
+    return next();
+}

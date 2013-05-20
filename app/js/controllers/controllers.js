@@ -53,7 +53,7 @@ $scope.alerts = [
 MyCtrl1.$inject = ['$scope', '$cookies', 'Facebook'];
 
 
-function MyCtrl2($scope, user) {
+function MyCtrl2($scope, user, $http) {
 
     $scope.multiCheck = [
         {text: "Is Brandon cool?", value: false},
@@ -109,5 +109,12 @@ function MyCtrl2($scope, user) {
 	$scope.timepicker = {
 		"time": ""
 	};
+
+    $scope.username = '';
+    $scope.password = '';
+
+    $scope.middleware = function() {
+        $http.post('api/middleware', {'username': $scope.username, 'password': $scope.password});
+    };
 }
-MyCtrl2.$inject = ['$scope', 'user'];
+MyCtrl2.$inject = ['$scope', 'user', '$http'];
