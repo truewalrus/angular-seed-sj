@@ -25,12 +25,12 @@ All frontend code is located in `app/`
  
 ####For example, to add a new directive:  
 
-* Open `app/js/directives`
-* Create a new .js file titled as the name of your directive ([directiveName].js)
-* In your directive, write   
-
-		angular.module("myApp.directives").directive("[directiveName]", function() { [directive functionality] });
-
+* Navigate to `app/js/directives`
+* Create a new .js file named after your directive (`[directiveName].js`)
+* In the file, declare a new directive
+```js
+angular.module("myApp.directives").directive("[directiveName]", function() { [directive functionality] });
+```
 * Add all third party minified dependency js files to `app/lib/third-party-js` and all third party less files to `app/less/third-party`
 * Run `grunt` in command prompt and it's done! Use as normal.
 * Follow the same steps for services and filters but replace all uses of `directives` with `services` or `filters`
@@ -42,11 +42,11 @@ All frontend code is located in `app/`
 		
 		$routeProvider.when('/[partialName]', {templateUrl: 'partials/[partialName].html'});
 
-* Navigate to `app/js/controllers.js` and create a new .js file
-* In the js file, create a new controller
+* Navigate to `app/js/controllers`
+* Create a new .js file named after the controller (`[controllerName].js`)
+* In the file, declare a new controller
 		
-		function [controllerName] ($scope){}
-		[controllerName].$inject = ['$scope'];
+		angular.module('myApp.controllers').controller('[controllerName]', ['$scope', function($scope) { [controller functionality] });
 
 * In the partial, set up ng-controller to use the controller you just created
 		
