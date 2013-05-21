@@ -77,7 +77,7 @@ function MyCtrl2($scope, user, $http) {
 
 
     $scope.signUp = function(){
-        user.signUp('rekursiv', 'hunter2',
+        user.signUp($scope.username, $scope.password,
             function(data){
                 console.log(data);
             },
@@ -88,8 +88,7 @@ function MyCtrl2($scope, user, $http) {
 
 
     $scope.checkSession = function(){
-        user.checkSession('rekursiv', {},
-            function(data){
+        user.checkSession( function(data){
                 console.log(data);
             },
             function(data){

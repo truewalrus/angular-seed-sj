@@ -1,11 +1,17 @@
 'use strict';
 
-angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', function($scope, user){
+angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', function($scope, iUser){
 	
 	$scope.signingIn = true;
 	$scope.userName = '';
 	$scope.user = {};
 	$scope.loggedIn = false;
+
+    $scope.$on('userLoggedIn', function() {
+        $scope.loggedIn = true;
+        $scope.userName = iUser.getUser().username;
+        console.log(iUser.getUser());
+    });
 	
 	var clearUser = function(clearPassOnly) {
 		if (clearPassOnly) {
@@ -21,12 +27,12 @@ angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', f
 	};
 	
 	var checkSession = function() {
-		user.checkSession(
+		iUser.checkSession(
 			function(data) {
 				$scope.loggedIn = true;
 				$scope.userName = data.username;
 			},
-			function() {
+			function(data) {
 				$scope.loggedIn = false;
 			}
 		);
@@ -53,11 +59,11 @@ angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', f
 	
 	$scope.signIn = function() {
 		clearErrMsg();
-		console.warn('signIn');
-		console.log('username: ' + $scope.user.username);
-		console.log('password: ' + $scope.user.pw);
+		console.log('%cSigning In', "color: red;font-weight:bold;");
+		console.log('- Username: ' + $scope.user.username);
+		console.log('- Password: ' + $scope.user.pw);
 		
-		user.login($scope.user.username, $scope.user.pw, function(data) {
+		iUser.login($scope.user.username, $scope.user.pw, function(data) {
 			console.log('logged in!');
 			$scope.loggedIn = true;
 			$scope.userName = data.username;
@@ -76,7 +82,7 @@ angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', f
 		console.log('username: ' + $scope.user.username);
 		console.log('password: ' + $scope.user.pw);
 		
-		user.signUp($scope.user.username, $scope.user.pw, function(data) {
+		iUser.signUp($scope.user.username, $scope.user.pw, function(data) {
 			console.log('added %s', data.username);
 			clearUser();
 		},
@@ -89,7 +95,7 @@ angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', f
 	};
 	
 	$scope.logOut = function() {
-		user.logout(
+		iUser.logout(
 			function() {
 				console.warn('logout successful!');
 				$scope.userName = '';
@@ -102,7 +108,7 @@ angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', f
 	};
 	
 	$scope.deleteUser = function() {
-		user.deleteLoggedIn(
+		iUser.deleteLoggedIn(
 			function(data) {
 				console.log(data.message);
 				checkSession();

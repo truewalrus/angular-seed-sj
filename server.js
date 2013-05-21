@@ -46,9 +46,13 @@ var port = 1337;
 	2. Include Dependencies
 */
 var express = require('express');
+var bcrypt = require('bcrypt-nodejs');
 var handlers = require('./node/handlers');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var fs = require('fs');
+var http = require('http');
+//var https = require('https');
 
 passport.serializeUser(function(user, done) {
    done(null, user._id);
@@ -65,13 +69,16 @@ passport.use(new LocalStrategy(
         console.log("Auth: ", username, password);
         handlers.findByUsername(username, function(err, user) {
             if (err) { return done(err); }
-            if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-            if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+            if (!user) { return done(null, false, { errUser: true }); }
+            if (!bcrypt.compareSync(password, user.password)) { return done(null, false, { errPassword: true }); }
 
             return done(null, user);
         });
     }
 ))
+
+var privateKey = fs.readFileSync('key/ssl.key').toString();
+var certificate = fs.readFileSync('key/ssl.crt').toString();
 
 /*
 	3. Start App With Express
@@ -82,13 +89,15 @@ var app = express();
 /* 
 	4. Configuration
 */
+app.use(express.static(__dirname + '/app'));
+
 app.use(express.cookieParser());
 app.use(express.session({ secret: "keyboard cat" }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // 4.1 Set Static File Path
-app.use(express.static(__dirname + '/app'));
+
 app.use(express.bodyParser());
 
 
@@ -107,7 +116,8 @@ app.get('/api/test1', handlers.test1);
 /*
 	returns all users in a list of objects
 */
-app.get('/api/user', handlers.allUsers);
+//app.get('/api/user', handlers.allUsers);
+app.get('/api/user', ensureAuthentication, handlers.userInfo);
 
 // 5.3 user first name get call 
 /*
@@ -130,23 +140,22 @@ app.get('/api/user/logout', handlers.userLogout);
 // 5.6 delete user
 app.get('/api/user/delete', handlers.userDelete);
 
-app.post('/api/middleware', function(req, res, next) {
-    console.log("In Middleware");
-    next();
-}, function(request, response, next) {
+app.post('/api/user/login', function(request, response, next) {
         passport.authenticate('local', function(err, user, info) {
             if (err) { return next(err); }
             if (!user) {
-                return response.send(401);
+                return response.send(401, info);
             }
 
             request.login(user, function(err) {
                 if (err) { return next(err); }
                 console.log("User logged in");
-                return response.send(200);
+                return response.send(200, { 'username': user.username });
             });
         })(request, response, next);
 });
+
+app.get('/api/user/checkSession', ensureAuthentication, handlers.checkSession);
 
 // 5.55 catch-all get call 
 /*
@@ -154,13 +163,24 @@ app.post('/api/middleware', function(req, res, next) {
 */
 app.get('*', handlers.index);
 
-app.post('/api/user/login', handlers.userLogin);
+//app.post('/api/user/login', handlers.userLogin);
 app.post('/api/user/create', handlers.createUser);
-app.post('/api/user/checkSession', ensureAuthentication, handlers.checkSession);
+
+/*var app2 = express();
+
+app2.get('*', function(request, response) {
+	response.redirect('https://' + resquest.header('Host') + request.url);
+});
+
+var reServer = http.createServer(app2);
+reServer.listen(port + 1);
+*/
+
 
 /*
 	6. Listen On Specified Port
 */
+//var server = https.createServer({key: privateKey, cert: certificate}, app);
 app.listen(port);
 console.log('Listening on port %d.', port);
 

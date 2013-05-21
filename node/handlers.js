@@ -31,6 +31,8 @@ var mongodb = require('mongodb'),
     ObjectID = require('mongodb').ObjectID,
 	db_connector = new mongodb.Db('test1', mongoserver, {'strict': true});
 
+var bcrypt = require('bcrypt-nodejs');
+
 // 1.2 Open connection to db
 /*
 	Open connection to the db, test if users collection exists, if it doesn't, run populateDB() to create and populate the collection
@@ -121,6 +123,7 @@ exports.findByUsername = findByUsername;
 function index(request, response) {
 	console.log('sending index.html');
 	response.sendfile('app/index.html');
+	//response.redirect('/');
 }
 exports.index = index;
 
@@ -184,6 +187,10 @@ function userLogout(request, response) {
 }
 exports.userLogout = userLogout;
 
+function userInfo(request, response) {
+    response.send(request.user);
+}
+exports.userInfo = userInfo;
 
 function userDelete(request, response) {
 
@@ -212,7 +219,7 @@ exports.userDelete = userDelete;
 
 // 3. Post Requests
 
-function userLogin(request, response){
+/*function userLogin(request, response){
 
     db_connector.collection('users', function(err, collection) {
         collection.find({'id': request.body.username.toUpperCase(), 'password': request.body.password}).toArray(function(err, items) {
@@ -235,13 +242,15 @@ function userLogin(request, response){
         });
     });
 }
-exports.userLogin = userLogin;
+exports.userLogin = userLogin;*/
 
 function createUser(request, response){
+    var salt = bcrypt.genSaltSync();
+    var password =  bcrypt.hashSync(request.body.password, salt);
     db_connector.collection('users', function(err, collection){
-        collection.insert({'username': request.body.username, 'password': request.body.password, 'id': request.body.username.toUpperCase()}, {safe: true}, function(err, data){
+        collection.insert({'username': request.body.username, 'password': password, 'id': request.body.username.toUpperCase()}, {safe: true}, function(err, data){
             if (err) {
-                response.send("Username already exists!!!", 400);
+                response.send("Username already exists!!!", 401);
             }
             else {
                 console.log("Data added as " + data[0].id);

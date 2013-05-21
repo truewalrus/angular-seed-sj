@@ -9,18 +9,17 @@ module.exports = function(grunt) {
 		mangle is set to false in the options because this disrupted the angular source files and caused errors
 	*/
     uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-      },
-      build: {
-        src: [  'app/js/*.js', 
-				'app/js/directives/*.js',
-				'app/js/services/*.js',
-				'app/js/filters/*.js', 
-				'app/js/controllers/*.js' 
-				],
-        dest: 'app/production/build.js'
-      }
+		options: {
+			banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+		},
+		build: {
+			src: [ 'app/js/**/*.js' ],
+			dest: 'app/production/build.js'
+		},
+		server: {
+			src: [ 'server.js' ],
+			dest: 'server.min.js'
+		}
     },
     //converts less to css in app/production/css/base.css
 	less: {
@@ -66,10 +65,10 @@ module.exports = function(grunt) {
 		this allows for easier script inclusion in index.html
 	*/
 	concat: {
-    dist: {
-		src: ['app/lib/third-party-js/*.js'],
-		dest: 'app/production/lib/js/third-party.js'
-    }
+		dist: {
+			src: ['app/lib/third-party-js/*.js'],
+			dest: 'app/production/lib/js/third-party.js'
+		}
   }
   });
   

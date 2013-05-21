@@ -1,7 +1,18 @@
 //Service for user login
 'use strict';
 angular.module("myApp.services")
-    .service('user', ['$http', function($http){
+    .service('user', ['$rootScope', '$http', function($rootScope, $http){
+
+        var user = false;
+        var loggedIn = false;
+
+/*        var setUser = function(data) {
+            console.log(this, data);
+            this.user = data;
+        };*/
+
+        this.getUser = function() { return user; };
+        this.isLoggedIn = function() { return loggedIn; };
 
         //signup
         this.signUp = function(username, password, success, error){
@@ -18,7 +29,9 @@ angular.module("myApp.services")
         this.login = function(username, password, success, error){
             $http.post('api/user/login', {'username': username, 'password': password}).
                 success(function(data) {
-                    success(data);
+                    user = data;
+                    loggedIn = true;
+                    $rootScope.$broadcast('userLoggedIn');
                 }).
                 error(function(data) {
                     error(data);
@@ -27,7 +40,7 @@ angular.module("myApp.services")
         };
 
         this.checkSession = function(success, error){
-            $http.post('api/user/checkSession').
+            $http.get('api/user/checkSession').
                 success(function(data) {
                     success(data);
                 }).
@@ -40,6 +53,8 @@ angular.module("myApp.services")
 		this.logout = function(success, error) {
 			$http.get('api/user/logout').
 				success(function(data) {
+                    user = false;
+                    loggedIn = false;
 					success(data);
 				}).
 				error(function(data) {

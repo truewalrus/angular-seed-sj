@@ -5,7 +5,8 @@
     "express": "~3.0.0",
     "mongodb": ">= 0.9.6-7",
     "passport": "~0.1.17",
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+    "bcrypt-nodejs": "0.0.3"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
