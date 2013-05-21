@@ -16,7 +16,7 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.s
 	/*
 		IE 10 is oldest IE that html5mode will work on
 	*/
-	//$locationProvider.html5Mode(true);
+	$locationProvider.html5Mode(true);
   }]);
 
 app.run(['$rootScope', function($rootScope) {

@@ -29,7 +29,7 @@
 var mongodb = require('mongodb'),
 	mongoserver = new mongodb.Server('localhost', mongodb.Connection.DEFAULT_PORT, {'auto-reconnect': true}),
     ObjectID = require('mongodb').ObjectID,
-	db_connector = new mongodb.Db('test1', mongoserver, {'strict': true});
+	db_connector = new mongodb.Db('test1', mongoserver, {'safe': false, 'strict': true});
 
 var bcrypt = require('bcrypt-nodejs');
 
@@ -82,6 +82,15 @@ var populateDB = function() {
 	});
 };
 
+function clearDatabase(request, response) {
+	db_connector.collection('users', function(err, users) {
+		console.log("removing");
+		users.remove();
+		response.send(200);
+	});
+}
+exports.clearDatabase = clearDatabase;
+
 function findById(id, fn) {
     console.log("Finding by ID");
     db_connector.collection('users', function(err, collection) {
@@ -121,9 +130,8 @@ exports.findByUsername = findByUsername;
 
 // 2.1 Main Index / Default Handler
 function index(request, response) {
-	console.log('sending index.html');
+	console.log('Sending index.html (%s)', request.url);
 	response.sendfile('app/index.html');
-	//response.redirect('/');
 }
 exports.index = index;
 

@@ -110,6 +110,10 @@ app.use(express.bodyParser());
 /*
 	Returns the string 'sending test1'
 */
+app.get('/favicon.ico', function(request, response) {
+	response.send(403);
+});
+
 app.get('/api/test1', handlers.test1);
 
 // 5.2 user get call
@@ -139,6 +143,8 @@ app.get('/api/user/logout', handlers.userLogout);
 
 // 5.6 delete user
 app.get('/api/user/delete', handlers.userDelete);
+
+app.get('api/user/clear', handlers.clearDatabase);
 
 app.post('/api/user/login', function(request, response, next) {
         passport.authenticate('local', function(err, user, info) {
