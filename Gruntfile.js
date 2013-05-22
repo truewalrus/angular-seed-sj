@@ -12,21 +12,23 @@ module.exports = function(grunt) {
 			},
 			release: {
 				files: {
-					'release/server.min.js': [ 'server.js' ],
-					'release/app/js/app.min.js': [ 'app/js/**/*.js' ]
+					'dist/server.js': [ 'src/server.js' ],
+					'dist/node/handlers.js': [ 'src/node/handlers.js' ],
+					'dist/app/js/build.js': [ 'src/app/js/**/*.js' ]
 				}
 			}
 		},
 		//converts less to css in app/production/css/base.css
 		less: {
-			base: {
-				src: [
-					'app/less/base/*.less',
-					'app/less/third-party/*.less'
-				],
-				dest: 'app/production/css/base.css',
+			develop: {
 				options: {
 					yuicompress: true
+				},
+				files: {
+					'dev/app/css/base.css': [
+						'src/app/less/base/*.less',
+						'src/app/less/thirdparty/*.less'
+					]
 				}
 			},
 			release: {
@@ -34,9 +36,9 @@ module.exports = function(grunt) {
 					yuicompress: true
 				},
 				files: {
-					'release/app/css/base.min.css': [
-						'app/less/base/*.less',
-						'app/less/third-part/*.less'
+					'dist/app/css/base.css': [
+						'src/app/less/base/*.less',
+						'src/app/less/thirdparty/*.less'
 					]
 				}
 			}
@@ -45,7 +47,7 @@ module.exports = function(grunt) {
 		jshint: {
 			all: [
 				'Gruntfile.js',
-				'app/js/**/*.js'
+				'src/app/js/**/*.js'
 			],
 			//options set to make angular agree with jshint a bit more
 			options:{
@@ -78,9 +80,34 @@ module.exports = function(grunt) {
 		this allows for easier script inclusion in index.html
 		*/
 		concat: {
-			third_party: {
-				src: ['app/lib/third-party-js/*.js'],
-				dest: 'app/production/lib/js/third-party.js'
+			develop: {
+				files: {
+					'dev/server.js': [ 'src/server.js' ],
+					'dev/node/handlers.js': [ 'src/node/handlers.js' ],
+					'dev/app/js/build.js': [ 'src/app/js/**/*.js' ],
+					'dev/app/lib/js/third-party.js': ['src/app/lib/thirdparty/*.js'],
+					'dev/app/index.html': [ 'src/app/index.html' ]
+				}
+			},
+			release: {
+				files: {
+					'dist/app/lib/js/third-party.js': ['src/app/lib/thirdparty/*.js'],
+					'dist/app/index.html': [ 'src/app/index.html' ],
+					'dist/package.json': [ 'package.json' ]
+				}
+			}
+		},
+		
+		copy: {
+			develop: {
+				files: [
+					{expand: true, flatten: true, src: ['src/app/partials/*'], dest: 'dev/app/partials', filter: 'isFile'}
+				]
+			},
+			release: {
+				files: [
+					{expand: true, flatten: true, src: ['src/app/partials/*'], dest: 'dist/app/partials', filter: 'isFile'}
+				]
 			}
 		}
 	});
@@ -101,10 +128,12 @@ module.exports = function(grunt) {
 
 	//Load the plugin that provides the "concatenate" task.
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	// Default task(s). Add task here if you want it to run every time grunt is run
-	grunt.registerTask('default', ['less:base', 'jshint', 'concat']);
+	grunt.registerTask('default', ['less:develop', 'jshint', 'concat:develop', 'copy:develop']);
 	
-	grunt.registerTask('release', ['uglify:release', 'less:release']);
+	grunt.registerTask('release', ['uglify:release', 'less:release', 'concat:release', 'copy:release']);
 
 };
