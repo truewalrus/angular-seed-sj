@@ -202,23 +202,16 @@ exports.userInfo = userInfo;
 
 function userDelete(request, response) {
 
-	var cur_username = request.session.username;
 
 	db_connector.collection('users', function(err, collection) {
-        collection.remove({'id': request.session.username.toUpperCase()}, function(err) {
+        collection.remove({'id': request.user.id}, function(err) {
 			if (err) {
 				console.log('error here: ' + err);
 				response.send({'message':'Failed to delete user'}, 401);
 			}
 			else {
-				request.session.destroy(function(err){
-					if (err) {
-						response.send('Session destroy failed', 401);
-					}
-					else {
-						response.send({'message':'Deleted user ' + cur_username}, 200);
-					}
-				});
+				request.logout();
+                response.send(200);
 			}
         });
     });
