@@ -1,6 +1,6 @@
 # angular-seed-sj
 
-This is an easily modifiable angular-seed incorporating angular-ui, bootstrap, and currently jQuery.
+This is an easily modifiable angular-seed.
 
 ## Dependencies
 * [Node.JS] (http://nodejs.org/) - backend platform entirely in javascript
@@ -10,8 +10,10 @@ This is an easily modifiable angular-seed incorporating angular-ui, bootstrap, a
 
 After pulling, navigate to the main folder and open cmd prompt, enter and run:
 * `npm install` -- this installs all needed dependencies
-* `grunt` -- compiles all code into its production form, which is currently what the index file is looking at to run
-* `node server` -- server.js is the file in which the node server is located, node server runs this server
+* `grunt` -- compiles all code into its develop form -- to compile for release, type `grunt release`
+
+Navigate to either `/dev` (development) or `/dist` (to test the release version) and do the following command in cmd prompt to start the server
+* `node server` -- server.js is the file in which the node server is located, node server runs this server. 
 
 In order to view the web page, go to localhost:1337 in a browser
 
@@ -19,13 +21,14 @@ In order to view the web page, go to localhost:1337 in a browser
 This seed is setup to easily incorporate new files without having to often modify app.js or index.html.
 
 ### Front-end
-All frontend code is located in `app/` 
+All code that will be modified is located in `src/`
+All front-end code to be modified is located in `src/app`
 
 `app/js` hosts all js files. To add new files, simply create a new file within any of the respective folders and it will be automatically compiled.  
  
 ####For example, to add a new directive:  
 
-* Navigate to `app/js/directives`
+* Navigate to `src/app/js/directives`
 * Create a new .js file named after your directive (`[directiveName].js`)
 * In the file, declare a new directive
 		
@@ -33,13 +36,13 @@ All frontend code is located in `app/`
 			[directive functionality]
 		});
 		
-* Add all third party minified dependency js files to `app/lib/third-party-js` and all third party less files to `app/less/third-party`
-* Run `grunt` in command prompt and it's done! Use as normal.
-* Follow the same steps for services and filters but replace all uses of `directives` with `services` or `filters`
+* Add all third party minified dependency js files to `app/lib/thirdparty` and all third party less files to `app/less/thirdparty`
+* Run `grunt` in command prompt and it's done! Run `grunt release` to put it all into `dist\` for release.
+* Follow the same steps for services, controllers, and filters but replace all uses of `directives` with `services`, `controllers`, or `filters`
 
 ####To add a new partial:
-* Create a new html file in `app/partials`
-* Open `app/js/app.js`
+* Create a new html file in `src/app/partials`
+* Open `src/app/js/app.js`
 * Add routing to your new partial
 		
 		$routeProvider.when('/[partialName]', {templateUrl: 'partials/[partialName].html'});
@@ -58,8 +61,8 @@ All frontend code is located in `app/`
 			//html code
 		</div>
 
-* Run `grunt` to compile the controller
-* Run `node server` in a command prompt
+* Run `grunt` to compile the controller. `grunt release` for `/dist`
+* Run `node server` from the `dev/` folder in a command prompt
 * Navigate to the site `localhost:1337/[partialName]` to see it
 
 ### Back-end
@@ -84,7 +87,7 @@ The site is hosted using Node.JS
 
 #### Running the Server
 
-* To start the server, open a command terminal, navigate to the root directory, and type `node server`
+* To start the server, open a command terminal, navigate to the `dev/` or `dist/` directory, and type `node server`
 * The terminal should then say `Listening on port 1337`
 
 #### Adding Routes for Backend API Calls
@@ -109,6 +112,3 @@ There are 2 main steps for adding a new route for a backend api call:
 		exports.test1 = test1;
 
 	Request handling can obviously become more complex when querying databases and such, but the routing principles remain the same.
-
-
-#### Adding custom modules
