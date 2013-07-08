@@ -83,7 +83,7 @@ module.exports = function(grunt) {
 			develop: {
 				files: {
 					'dev/server.js': [ 'src/server.js' ],
-					'dev/node/handlers.js': [ 'src/node/handlers.js' ],
+					'dev/node/handlers.js': [ 'src/node/**/*.js' ],
 					'dev/app/js/build.js': [ 'src/app/js/**/*.js' ],
 					'dev/app/lib/js/third-party.js': ['src/app/lib/thirdparty/*.js'],
 					'dev/app/index.html': [ 'src/app/index.html' ]
@@ -129,11 +129,13 @@ module.exports = function(grunt) {
 	//Load the plugin that provides the "concatenate" task.
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	
+	//Load the plugin that provides the "copy" task.
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
-	// Default task(s). Add task here if you want it to run every time grunt is run
+	// Default task(s). Add task here if you want it to run every time grunt is run -- compiles to /dev folder
 	grunt.registerTask('default', ['less:develop', 'jshint', 'concat:develop', 'copy:develop']);
 	
+	//grunt release. Compiles to /dist folder for distribution
 	grunt.registerTask('release', ['uglify:release', 'less:release', 'concat:release', 'copy:release']);
 
 };

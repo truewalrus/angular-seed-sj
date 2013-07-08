@@ -59,7 +59,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-   handlers.findById(id, function(err, user) {
+   handlers.users_findById(id, function(err, user) {
         done(err, user);
    });
 });
@@ -67,7 +67,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy(
     function(username, password, done) {
         console.log("Auth: ", username, password);
-        handlers.findByUsername(username, function(err, user) {
+        handlers.users_findByUsername(username, function(err, user) {
             if (err) { return done(err); }
             if (!user) { return done(null, false, { errUser: true }); }
             if (!bcrypt.compareSync(password, user.password)) { return done(null, false, { errPassword: true }); }
@@ -114,35 +114,35 @@ app.get('/favicon.ico', function(request, response) {
 	response.send(404);
 });
 
-app.get('/api/test1', handlers.test1);
+//app.get('/api/test1', handlers.test1);
 
 // 5.2 user get call
 /*
 	returns all users in a list of objects
 */
 //app.get('/api/user', handlers.allUsers);
-app.get('/api/user', ensureAuthentication, handlers.userInfo);
+app.get('/api/user', ensureAuthentication, handlers.users_userInfo);
 
 // 5.3 user first name get call 
 /*
 	returns users matching the first name field provided in a list of objects
 */
-app.get('/api/user/fname/:fname', handlers.findUserByFname);
+app.get('/api/user/fname/:fname', handlers.users_findUserByFname);
 
 // 5.4 user age call 
 /*
 	returns users matching the age field provided in a list of objects
 */
-app.get('/api/user/age/:age', handlers.findUserByAge);
+app.get('/api/user/age/:age', handlers.users_findUserByAge);
 
 // 5.5 user logout call
 /*
 	
 */
-app.get('/api/user/logout', handlers.userLogout);
+app.get('/api/user/logout', handlers.users_userLogout);
 
 // 5.6 delete user
-app.get('/api/user/delete', handlers.userDelete);
+app.get('/api/user/delete', handlers.users_userDelete);
 
 app.get('/api/user/clear', handlers.clearDatabase);
 
@@ -161,7 +161,7 @@ app.post('/api/user/login', function(request, response, next) {
         })(request, response, next);
 });
 
-app.get('/api/user/checkSession', ensureAuthentication, handlers.checkSession);
+app.get('/api/user/checkSession', ensureAuthentication, handlers.users_checkSession);
 
 // 5.55 catch-all get call 
 /*
@@ -170,7 +170,7 @@ app.get('/api/user/checkSession', ensureAuthentication, handlers.checkSession);
 app.get('*', handlers.index);
 
 //app.post('/api/user/login', handlers.userLogin);
-app.post('/api/user/create', handlers.createUser);
+app.post('/api/user/create', handlers.users_createUser);
 
 /*var app2 = express();
 

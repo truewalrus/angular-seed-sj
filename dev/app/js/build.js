@@ -219,6 +219,9 @@ MyCtrl1.$inject = ['$scope', '$cookies', 'Facebook'];
 
 function MyCtrl2($scope, user, $http) {
 
+    $scope.username = "harrison";
+
+
     $scope.multiCheck = [
         {text: "Is Brandon cool?", value: false},
         {text: "Is Jon cool?", value: false},
@@ -273,7 +276,7 @@ function MyCtrl2($scope, user, $http) {
 		"time": ""
 	};
 
-    $scope.username = '';
+  //  $scope.username = '';
     $scope.password = '';
 
     $scope.middleware = function() {
