@@ -81,9 +81,15 @@ module.exports = function(grunt) {
 		*/
 		concat: {
 			develop: {
+				options: {
+					separator: '\n\n'
+				},
 				files: {
-					'dev/server.js': [ 'src/server.js' ],
-					'dev/node/handlers.js': [ 'src/node/**/*.js' ],
+					'dev/server.js': [
+										'src/server_header.js',
+										'src/node/**/*.js',
+										'src/database.js',
+										'src/server_footer.js'],
 					'dev/app/js/build.js': [ 'src/app/js/**/*.js' ],
 					'dev/app/lib/js/third-party.js': ['src/app/lib/thirdparty/*.js'],
 					'dev/app/index.html': [ 'src/app/index.html' ]

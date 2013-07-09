@@ -1,3 +1,28 @@
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt-nodejs');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+collections.push(function(err, db) {
+	if (!err) {
+		console.log("Connected to test 1!");
+		db.collection('users', {strict: true}, function(err, collection) {
+			if (err) {
+				console.log("The users collection doesn't exist.  Creating it now.");
+				db_connector.createCollection('users', {strict: true}, function(err, collection) {
+					if (err) {
+						console.log(err);
+					}
+				});
+			}
+
+            db.ensureIndex('users', {'id': 1}, {unique: true, dropDups: true}, function() {});
+		});
+	}
+});
+
 function users_findById(id, fn) {
     console.log("Finding by ID");
     db_connector.collection('users', function(err, collection) {
@@ -13,7 +38,6 @@ function users_findById(id, fn) {
         });
     });
 }
-exports.users_findById = users_findById;
 
 function users_findByUsername(username, fn) {
     console.log("Finding by Username");
@@ -31,7 +55,6 @@ function users_findByUsername(username, fn) {
         });
     });
 }
-exports.users_findByUsername = users_findByUsername;
 
 // 2. Get Requests
 
@@ -45,7 +68,6 @@ function users_allUsers(request, response) {
         });
     });
 }
-exports.users_allUsers = users_allUsers;
 
 // 2.4 'api/user/fname/:fname' Handler
 function users_findUserByFname(request, response) {
@@ -58,7 +80,6 @@ function users_findUserByFname(request, response) {
         });
     });
 }
-exports.users_findUserByFname = users_findUserByFname;
 
 // 2.5 'api/user/age/:age' Handler
 function users_findUserByAge(request, response) {
@@ -71,7 +92,6 @@ function users_findUserByAge(request, response) {
         });
     });
 }
-exports.users_findUserByAge = users_findUserByAge;
 
 
 function users_userLogout(request, response) {
@@ -87,12 +107,10 @@ function users_userLogout(request, response) {
     request.logout();
     response.send(200);
 }
-exports.users_userLogout = users_userLogout;
 
 function users_userInfo(request, response) {
     response.send(request.user);
 }
-exports.users_userInfo = users_userInfo;
 
 function users_userDelete(request, response) {
 
@@ -110,34 +128,6 @@ function users_userDelete(request, response) {
         });
     });
 }
-exports.users_userDelete = users_userDelete;
-
-// 3. Post Requests
-
-/*function userLogin(request, response){
-
- db_connector.collection('users', function(err, collection) {
- collection.find({'id': request.body.username.toUpperCase(), 'password': request.body.password}).toArray(function(err, items) {
-
-
- if(items.length > 0) {
- request.session.username = request.body.username;
- request.session.cookie.maxAge = 1000 * 60 * 60;
-
- response.send({"message":"Login Successful", "username":items[0].username});
- }
-
- if(items.length == 0) {
- response.send("Incorrect username and/or password!!!", 401);
- }
-
- if (err) {
- console.log('error here: ' + err);
- }
- });
- });
- }
- exports.userLogin = userLogin;*/
 
 function users_createUser(request, response){
     var salt = bcrypt.genSaltSync();
@@ -154,15 +144,78 @@ function users_createUser(request, response){
         });
     });
 }
-exports.users_createUser = users_createUser;
 
 function users_checkSession(request,response){
     response.send(200);
-    /*    if(request.session.username){
-     response.send({'message':"Ok", 'username':request.session.username});
-     }
-     else{
-     response.send("Session not found", 401);
-     }*/
 }
-exports.users_checkSession = users_checkSession;
+
+function clearDatabase(request, response) {
+	db_connector.collection('users', function(err, users) {
+		console.log("removing");
+		users.remove();
+		response.send(200);
+	});
+}
+
+passport.serializeUser(function(user, done) {
+   done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+   users_findById(id, function(err, user) {
+        done(err, user);
+   });
+});
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        console.log("Auth: ", username, password);
+        users_findByUsername(username, function(err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false, { errUser: true }); }
+            if (!bcrypt.compareSync(password, user.password)) { return done(null, false, { errPassword: true }); }
+
+            return done(null, user);
+        });
+    }
+));
+
+function ensureAuthentication(request, response, next) {
+    if (!request.user) { return response.send(401); }
+
+    return next();
+}
+
+/* ALL DIS STUFF BE COOL */
+routing.push(function(app) {
+	app.get('/api/user', ensureAuthentication, users_userInfo);
+
+	app.get('/api/user/fname/:fname', users_findUserByFname);
+
+	app.get('/api/user/age/:age', users_findUserByAge);
+
+	app.get('/api/user/logout', users_userLogout);
+
+	app.get('/api/user/delete', users_userDelete);
+
+	app.get('/api/user/clear', clearDatabase);
+
+	app.post('/api/user/login', function(request, response, next) {
+			passport.authenticate('local', function(err, user, info) {
+				if (err) { return next(err); }
+				if (!user) {
+					return response.send(401, info);
+				}
+
+				request.login(user, function(err) {
+					if (err) { return next(err); }
+					console.log("User logged in");
+					return response.send(200, { 'username': user.username });
+				});
+			})(request, response, next);
+	});
+
+	app.get('/api/user/checkSession', ensureAuthentication, users_checkSession);
+
+	app.post('/api/user/create', users_createUser);
+});

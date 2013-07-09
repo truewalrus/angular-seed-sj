@@ -38,6 +38,7 @@ angular.module('myApp.filters', []);
 angular.module('myApp.directives',[]);
 angular.module('myApp.controllers', []);
 
+
 'use strict';
 
 angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', function($scope, iUser){
@@ -162,6 +163,7 @@ angular.module("myApp.controllers").controller('SignInCtrl', ['$scope','user', f
 	};
 	
 }]);
+
 'use strict';
 
 /* Controllers */
@@ -285,6 +287,7 @@ function MyCtrl2($scope, user, $http) {
 }
 MyCtrl2.$inject = ['$scope', 'user', '$http'];
 
+
 'use strict';
 
 /* Directives */
@@ -298,6 +301,7 @@ angular.module('myApp.directives').
   }]);
 
   
+
 'use strict';
 
 /* Filters */
@@ -308,6 +312,7 @@ angular.module('myApp.filters').
       return String(text).replace(/\%VERSION\%/mg, version);
     };
   }]);
+
 
 /*Service for getting facebook login*/
 
@@ -394,6 +399,7 @@ window.fbAsyncInit = function() {
     js.src = "//connect.facebook.net/en_US/all.js";
     ref.parentNode.insertBefore(js, ref);
 }(document));
+
 'use strict';
 
 /* Services */
@@ -402,6 +408,7 @@ window.fbAsyncInit = function() {
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('myApp.services').value('version', '0.1');
+
 
 
 //Service for user login

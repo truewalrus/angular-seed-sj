@@ -98,6 +98,7 @@ function index(request, response) {
 exports.index = index;
 
 
+
 function users_findById(id, fn) {
     console.log("Finding by ID");
     db_connector.collection('users', function(err, collection) {
