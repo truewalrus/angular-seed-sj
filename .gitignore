@@ -8,3 +8,5 @@ build.xml
 .idea/*
 
 node_modules/
+dev/
+dist/
