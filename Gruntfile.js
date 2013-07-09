@@ -12,8 +12,11 @@ module.exports = function(grunt) {
 			},
 			release: {
 				files: {
-					'dist/server.js': [ 'src/server.js' ],
-					'dist/node/handlers.js': [ 'src/node/handlers.js' ],
+					'dist/server.js': [
+										'src/server_header.js',
+										'src/node/**/*.js',
+										'src/database.js',
+										'src/server_footer.js'],
 					'dist/app/js/build.js': [ 'src/app/js/**/*.js' ]
 				}
 			}
