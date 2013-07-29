@@ -96,7 +96,7 @@ The backend is also set up for easy file adding and concatenation. There are 2 m
 * Add a line in the .js file you are working on to route the specific call under routing.push(function(app)){}
 
 		// use express app.get to create a route
-		app.get('/api/ex1', handlers.test1);
+		app.get('/api/ex1', test1);
 
 * Add handler logic in node/*.js (whatever file you're working on) file to generate the appropriate response
 
@@ -108,6 +108,5 @@ The backend is also set up for easy file adding and concatenation. There are 2 m
 			// sent the text 'test1' as the response
 			response.send('test1');
 		}
-		// include test1 as part of the exports so it's accessible in the server.js file
 
 	Request handling can obviously become more complex when querying databases and such, but the routing principles remain the same.
