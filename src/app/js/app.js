@@ -8,7 +8,7 @@ var app = angular.module('myApp', ['myApp.filters', 'myApp.directives', 'myApp.s
 
 	// angular front end routes
 	$routeProvider.when('/view1', {templateUrl: 'partials/partial1.html'});
-    $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
+    $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html'});
 	$routeProvider.when('/sign-in', {templateUrl: 'partials/sign-in.html'});
     $routeProvider.otherwise({redirectTo: '/view1'});
 	

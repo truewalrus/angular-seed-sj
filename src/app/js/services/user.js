@@ -49,7 +49,7 @@ angular.module("myApp.services")
                 });
 
         };
-		
+
 		this.logout = function(success, error) {
 			$http.get('api/user/logout').
 				success(function(data) {
@@ -61,8 +61,8 @@ angular.module("myApp.services")
 					error(data);
 				});
 		};
-		
-		
+
+
 		this.deleteLoggedIn = function(success, error) {
 			$http.get('api/user/delete').
 				success(function(data) {
